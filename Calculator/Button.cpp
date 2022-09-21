@@ -17,10 +17,12 @@ int Button::update(sf::RenderWindow* window, int &cntcrs)
 		cntcrs++;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && click == 0)
 		{
+			body.setTexture(*TextureManager::AcquireTexture("res/1.png"));
 			click++;
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && click == 0)
 		{
+			body.setTexture(*TextureManager::AcquireTexture("res/2.png"));
 			click++;
 		}
 		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && !sf::Mouse::isButtonPressed(sf::Mouse::Right))

@@ -42,10 +42,23 @@ void Game::calc()
 	sf::Event evnt;
 	clock.restart().asSeconds();
 
-	for (int i = 0; i < 9; i++)
+	sf::Vector2f positions[10] = {
+		sf::Vector2f(78,476), // 0
+		sf::Vector2f(4,402),  // 1
+		sf::Vector2f(78,402), // 2
+		sf::Vector2f(152,402),// 3
+		sf::Vector2f(4,328),// 4
+		sf::Vector2f(78,328), // 5
+		sf::Vector2f(152,328),// 6
+		sf::Vector2f(4,254),// 7
+		sf::Vector2f(78,254),  // 8
+		sf::Vector2f(152,254)     // 9
+	};
+
+	for (int i = 0; i < 10; i++)
 	{
-		Button* btn = new Button(sf::Vector2f(35, 35+(i*40)), i);
-		buttons.push_back(btn);
+		Button* btn = new Button(positions[i], i);
+		buttons->push_back(btn);
 	}
 
 	int cntcrs = 0;
@@ -73,7 +86,7 @@ void Game::calc()
 			}
 		}
 
-		for (auto i : buttons)
+		for (auto i : *buttons)
 			i->update(window, cntcrs);
 
 
@@ -84,10 +97,19 @@ void Game::calc()
 		cntcrs = 0;
 
 		window->clear();
-		for (auto i : buttons)
+		for (auto i : *buttons)
 			i->draw(window);
 		window->display();
 	}
+
+	for (auto i = buttons->begin(); i != buttons->end();)
+	{
+		Button* e = *i;
+		i = buttons->erase(i);
+		delete e;
+	}
+	buttons->clear();
+	delete buttons;
 
 	close = true;
 }

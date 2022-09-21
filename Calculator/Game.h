@@ -24,7 +24,7 @@ public:
 	void start();
 private:
 	void calc();
-	std::vector<Button*> buttons;
+	std::vector<Button*>* buttons = new std::vector<Button*>;
 
 	int temp_, temp_2;
 private:
