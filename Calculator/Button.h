@@ -12,5 +12,6 @@ private:
 	sf::Sprite body;
 	int id;
 	int click = 0;
+	bool hold = false;
 };
 

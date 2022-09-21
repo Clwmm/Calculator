@@ -16,7 +16,7 @@ int main()
 		archive >> *game;
 	}
 
-	FreeConsole();
+	//FreeConsole();
 	srand(time(0));
 	game->start();
 

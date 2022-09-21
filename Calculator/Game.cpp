@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -22,12 +23,12 @@ void Game::start()
 0 - 0
 ...
 9 - 9
-10 - *
-11 - /
+10 - .
+11 - =
 12 - +
 13 - -
-14 - =
-15 - ,
+14 - *
+15 - /
 16 - %
 17 - +/-
 18 - AC
@@ -42,20 +43,29 @@ void Game::calc()
 	sf::Event evnt;
 	clock.restart().asSeconds();
 
-	sf::Vector2f positions[10] = {
+	sf::Vector2f positions[19] = {
 		sf::Vector2f(78,476), // 0
 		sf::Vector2f(4,402),  // 1
 		sf::Vector2f(78,402), // 2
 		sf::Vector2f(152,402),// 3
-		sf::Vector2f(4,328),// 4
+		sf::Vector2f(4,328),  // 4
 		sf::Vector2f(78,328), // 5
 		sf::Vector2f(152,328),// 6
-		sf::Vector2f(4,254),// 7
-		sf::Vector2f(78,254),  // 8
-		sf::Vector2f(152,254)     // 9
+		sf::Vector2f(4,254),  // 7
+		sf::Vector2f(78,254), // 8
+		sf::Vector2f(152,254), // 9
+		sf::Vector2f(152,476),
+		sf::Vector2f(226,476),
+		sf::Vector2f(226,402),
+		sf::Vector2f(226,328),
+		sf::Vector2f(226,254),
+		sf::Vector2f(226,180),
+		sf::Vector2f(152,180),
+		sf::Vector2f(78,180),
+		sf::Vector2f(4,180)
 	};
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 19; i++)
 	{
 		Button* btn = new Button(positions[i], i);
 		buttons->push_back(btn);
@@ -87,7 +97,20 @@ void Game::calc()
 		}
 
 		for (auto i : *buttons)
-			i->update(window, cntcrs);
+		{
+			int a = i->update(window, cntcrs);
+			if (a >= 0)
+				std::cout << a << std::endl;
+			switch (a)
+			{
+			case 1:
+				break;
+			case 2:
+				break;
+			default:
+				break;
+			}
+		}
 
 
 		if (cntcrs > 0)
