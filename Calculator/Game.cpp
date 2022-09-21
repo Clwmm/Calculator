@@ -84,6 +84,21 @@ void Game::calc()
 	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	window->setFramerateLimit(60);
 
+	sf::Text tx;
+	tx.setCharacterSize(100);
+	tx.setFont(*font);
+	tx.setFillColor(sf::Color::White);
+	tx.setPosition(10,70);
+
+	sf::Text tx2;
+	tx2.setCharacterSize(55);
+	tx2.setFont(*font);
+	tx2.setFillColor(sf::Color(40,40,40));
+	tx2.setPosition(10, 60);
+
+	float display = 0;
+	float temp = 0;
+
 	sf::Event evnt;
 	clock.restart().asSeconds();
 
@@ -144,17 +159,115 @@ void Game::calc()
 		{
 			int a = i->update(window, cntcrs);
 			if (a >= 0)
-				std::cout << a << std::endl;
-			switch (a)
 			{
-			case 1:
-				break;
-			case 2:
-				break;
-			default:
-				break;
+				std::cout << a << std::endl;
+				switch (a)
+				{
+				case 0:
+					display *= 10;
+					break;
+				case 1:
+					display *= 10;
+					display += 1;
+					break;
+				case 2:
+					display *= 10;
+					display += 2;
+					break;
+				case 3:
+					display *= 10;
+					display += 3;
+					break;
+				case 4:
+					display *= 10;
+					display += 4;
+					break;
+				case 5:
+					display *= 10;
+					display += 5;
+					break;
+				case 6:
+					display *= 10;
+					display += 6;
+					break;
+				case 7:
+					display *= 10;
+					display += 7;
+					break;
+				case 8:
+					display *= 10;
+					display += 8;
+					break;
+				case 9:
+					display *= 10;
+					display += 9;
+					break;
+				case 10:
+					break;
+				case 11:
+					switch (status)
+					{
+					case Status::plus:
+						display = temp + display;
+						break;
+					case Status::minus:
+						display = temp - display;
+						break;
+					case Status::multi:
+						display = temp * display;
+						break;
+					case Status::div:
+						display = temp / display;
+						break;
+					case Status::perc:
+						
+						break;
+					default:
+						break;
+					}
+					status = Status::def;
+					break;
+				case 12:
+					status = Status::plus;
+					tx2.setString(std::to_string(display) + " +");
+					temp = display;
+					display = 0;
+					break;
+				case 13:
+					status = Status::minus;
+					tx2.setString(std::to_string(display) + " -");
+					temp = display;
+					display = 0;
+					break;
+				case 14:
+					status = Status::multi;
+					tx2.setString(std::to_string(display) + " *");
+					temp = display;
+					display = 0;
+					break;
+				case 15:
+					status = Status::div;
+					tx2.setString(std::to_string(display) + " /");
+					temp = display;
+					display = 0;
+					break;
+				case 16:
+					status = Status::perc;
+					break;
+				case 17:
+					display = -display;
+					break;
+				case 18:
+					status = Status::def;
+					display = 0;
+					break;
+				default:
+					break;
+				}
 			}
 		}
+
+		tx.setString(std::to_string(display));
 
 
 		if (cntcrs > 0)
@@ -166,6 +279,9 @@ void Game::calc()
 		window->clear();
 		for (auto i : *buttons)
 			i->draw(window);
+		window->draw(tx);
+		if (status != Status::def)
+		window->draw(tx2);
 		window->display();
 	}
 

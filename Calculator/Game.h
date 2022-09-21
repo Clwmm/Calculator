@@ -5,6 +5,8 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include "Button.h"
 
+enum class Status { def, plus, minus, multi, div, perc};
+
 class Game
 {
 private:
@@ -25,6 +27,7 @@ public:
 private:
 	void calc();
 	std::vector<Button*>* buttons = new std::vector<Button*>;
+	Status status = Status::def;
 
 	int temp_, temp_2;
 private:

@@ -19,26 +19,6 @@ Button::Button(sf::Vector2f position, int _id, sf::Font &font)
 
 	switch (id)
 	{
-	case 0:
-		break;
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	case 5:
-		break;
-	case 6:
-		break;
-	case 7:
-		break;
-	case 8:
-		break;
-	case 9:
-		break;
 	case 10:
 		tx.setString(",");
 		tx.setPosition(sf::Vector2f(body.getPosition().x + 30, body.getPosition().y - 15));
@@ -71,7 +51,9 @@ Button::Button(sf::Vector2f position, int _id, sf::Font &font)
 		break;
 	case 18:
 		tx.setString("AC");
-		tx.setPosition(sf::Vector2f(body.getPosition().x + +15, body.getPosition().y - 15));
+		tx.setPosition(sf::Vector2f(body.getPosition().x + 13, body.getPosition().y - 15));
+		break;
+	default:
 		break;
 	}
 }
