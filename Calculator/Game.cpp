@@ -78,6 +78,33 @@ void Game::start()
 18 - AC
 */
 
+std::string Game::display_converter(float display)
+{
+	std::string disstring = std::to_string(display);
+	bool stage = true;
+	std::string finalstring;
+
+	std::vector<char> char_vec(disstring.begin(), disstring.end());
+	for (std::vector<char>::reverse_iterator i = char_vec.rbegin(); i != char_vec.rend(); ++i)
+	{
+		switch (stage)
+		{
+		case true:
+			if (*i != 48)
+			{
+				stage = false;
+				if (*i != 46)
+					finalstring = *i + finalstring;
+			}
+			break;
+		case false:
+			finalstring = *i + finalstring;
+			break;
+		}
+	}
+	return finalstring;
+}
+
 void Game::calc()
 {
 	window = new sf::RenderWindow(sf::VideoMode(300, 550), GameName, sf::Style::Close);
@@ -229,25 +256,25 @@ void Game::calc()
 					break;
 				case 12:
 					status = Status::plus;
-					tx2.setString(std::to_string(display) + " +");
+					tx2.setString(display_converter(display) + " +");
 					temp = display;
 					display = 0;
 					break;
 				case 13:
 					status = Status::minus;
-					tx2.setString(std::to_string(display) + " -");
+					tx2.setString(display_converter(display) + " -");
 					temp = display;
 					display = 0;
 					break;
 				case 14:
 					status = Status::multi;
-					tx2.setString(std::to_string(display) + " *");
+					tx2.setString(display_converter(display) + " *");
 					temp = display;
 					display = 0;
 					break;
 				case 15:
 					status = Status::div;
-					tx2.setString(std::to_string(display) + " /");
+					tx2.setString(display_converter(display) + " /");
 					temp = display;
 					display = 0;
 					break;
@@ -267,14 +294,15 @@ void Game::calc()
 			}
 		}
 
-		tx.setString(std::to_string(display));
-
 
 		if (cntcrs > 0)
 			window->setMouseCursor(handcursor);
 		else
 			window->setMouseCursor(pointingcursor);
 		cntcrs = 0;
+
+		// DISPLAY
+		tx.setString(display_converter(display));
 
 		window->clear();
 		for (auto i : *buttons)
@@ -296,3 +324,10 @@ void Game::calc()
 
 	close = true;
 }
+
+
+/*
+To do:
+- metode do resetowania po u¿yciu AC oraz po kolejnym u¿ytkowaniu aplikacji po uzyskaniu wyniku
+
+*/
