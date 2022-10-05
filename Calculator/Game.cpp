@@ -20,50 +20,6 @@ void Game::start()
 }
 
 /*
-	switch (id)
-	{
-	case 0:
-		break;
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	case 5:
-		break;
-	case 6:
-		break;
-	case 7:
-		break;
-	case 8:
-		break;
-	case 9:
-		break;
-	case 10:
-		break;
-	case 11:
-		break;
-	case 12:
-		break;
-	case 13:
-		break;
-	case 14:
-		break;
-	case 15:
-		break;
-	case 16:
-		break;
-	case 17:
-		break;
-	case 18:
-		break;
-	}
-*/
-
-/*
 0 - 0
 ...
 9 - 9
@@ -139,7 +95,7 @@ void Game::calc()
 		sf::Vector2f(152,328),// 6
 		sf::Vector2f(4,254),  // 7
 		sf::Vector2f(78,254), // 8
-		sf::Vector2f(152,254), // 9
+		sf::Vector2f(152,254),// 9
 		sf::Vector2f(152,476),
 		sf::Vector2f(226,476),
 		sf::Vector2f(226,402),
@@ -442,8 +398,8 @@ void Game::calc()
 		for (auto i : *buttons)
 			i->draw(window);
 		window->draw(tx);
-		if (status != Status::def)
-		window->draw(tx2);
+		if (status != Status::def && status != Status::final)
+			window->draw(tx2);
 		window->display();
 	}
 
