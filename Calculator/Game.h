@@ -5,7 +5,7 @@
 //#include <boost/archive/binary_oarchive.hpp>
 #include "Button.h"
 
-enum class Status { def, plus, minus, multi, div, perc, resetc};
+enum class Status { def, plus, minus, multi, div, perc, resetc, final};
 
 class Game
 {

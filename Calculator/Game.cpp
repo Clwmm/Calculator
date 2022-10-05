@@ -112,10 +112,10 @@ void Game::calc()
 	window->setFramerateLimit(60);
 
 	sf::Text tx;
-	tx.setCharacterSize(100);
+	tx.setCharacterSize(75);
 	tx.setFont(*font);
 	tx.setFillColor(sf::Color::White);
-	tx.setPosition(10,70);
+	tx.setPosition(10,95);
 
 	sf::Text tx2;
 	tx2.setCharacterSize(55);
@@ -171,12 +171,139 @@ void Game::calc()
 				delete window;
 				return;
 			case sf::Event::KeyPressed:
+				if (status == Status::final)
+				{
+					status = Status::def;
+					display = 0;
+				}
 				if (evnt.key.code == sf::Keyboard::Escape)
 				{
 					close = true;
 					window->close();
 					delete window;
 					return;
+				}
+				if (evnt.key.code == sf::Keyboard::Num0 || evnt.key.code == sf::Keyboard::Numpad0)
+				{
+					display *= 10;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num1 || evnt.key.code == sf::Keyboard::Numpad1)
+				{
+					display *= 10;
+					display += 1;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num2 || evnt.key.code == sf::Keyboard::Numpad2)
+				{
+					display *= 10;
+					display += 2;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num3 || evnt.key.code == sf::Keyboard::Numpad3)
+				{
+					display *= 10;
+					display += 3;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num4 || evnt.key.code == sf::Keyboard::Numpad4)
+				{
+					display *= 10;
+					display += 4;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num5 || evnt.key.code == sf::Keyboard::Numpad5)
+				{
+					display *= 10;
+					display += 5;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num6 || evnt.key.code == sf::Keyboard::Numpad6)
+				{
+					display *= 10;
+					display += 6;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num7 || evnt.key.code == sf::Keyboard::Numpad7)
+				{
+					display *= 10;
+					display += 7;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num8 || evnt.key.code == sf::Keyboard::Numpad8)
+				{
+					display *= 10;
+					display += 8;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Num9 || evnt.key.code == sf::Keyboard::Numpad9)
+				{
+					display *= 10;
+					display += 9;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Add)
+				{
+					status = Status::plus;
+					tx2.setString(display_converter(display) + " +");
+					temp = display;
+					display = 0;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Subtract)
+				{
+					status = Status::minus;
+					tx2.setString(display_converter(display) + " -");
+					temp = display;
+					display = 0;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Multiply)
+				{
+					status = Status::multi;
+					tx2.setString(display_converter(display) + " *");
+					temp = display;
+					display = 0;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Divide)
+				{
+					status = Status::div;
+					tx2.setString(display_converter(display) + " /");
+					temp = display;
+					display = 0;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Delete)
+				{
+					status = Status::def;
+					display = 0;
+					break;
+				}
+				if (evnt.key.code == sf::Keyboard::Enter)
+				{
+					switch (status)
+					{
+					case Status::plus:
+						display = temp + display;
+						break;
+					case Status::minus:
+						display = temp - display;
+						break;
+					case Status::multi:
+						display = temp * display;
+						break;
+					case Status::div:
+						display = temp / display;
+						break;
+					case Status::perc:
+
+						break;
+					default:
+						break;
+					}
+					status = Status::final;
+					break;
 				}
 				break;
 			}
@@ -187,7 +314,14 @@ void Game::calc()
 			int a = i->update(window, cntcrs);
 			if (a >= 0)
 			{
+
 				std::cout << a << std::endl;
+
+				if (status == Status::final)
+				{
+					status = Status::def;
+					display = 0;
+				}
 				switch (a)
 				{
 				case 0:
