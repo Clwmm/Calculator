@@ -67,6 +67,24 @@ void Game::calc()
 	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	window->setFramerateLimit(60);
 
+
+	//SHADERS
+
+
+	sf::Shader shader;
+	if (!shader.loadFromFile("res/shader.frag", sf::Shader::Fragment))
+	{
+		std::cout << "Could't load fragment shader\n";
+		close = true;
+		window->close();
+		delete window;
+		return;
+	}
+	auto mouse_position = sf::Vector2f();
+
+
+	//
+
 	sf::Text tx;
 	tx.setCharacterSize(75);
 	tx.setFont(*font);
@@ -79,8 +97,8 @@ void Game::calc()
 	tx2.setFillColor(sf::Color(40,40,40));
 	tx2.setPosition(10, 60);
 
-	float display = 0;
-	float temp = 0;
+	double display = 0;
+	double temp = 0;
 
 	sf::Event evnt;
 	clock.restart().asSeconds();
@@ -126,6 +144,8 @@ void Game::calc()
 				window->close();
 				delete window;
 				return;
+			case sf::Event::MouseMoved:
+				mouse_position = window->mapPixelToCoords({ evnt.mouseMove.x, evnt.mouseMove.y });
 			case sf::Event::KeyPressed:
 				if (status == Status::final)
 				{
@@ -265,6 +285,10 @@ void Game::calc()
 			}
 		}
 
+		shader.setUniform("u_resolution", sf::Glsl::Vec2(window->getSize()));
+		shader.setUniform("u_mouse", sf::Glsl::Vec2(mouse_position));
+		shader.setUniform("u_time", clock.getElapsedTime().asSeconds());
+
 		for (auto i : *buttons)
 		{
 			int a = i->update(window, cntcrs);
@@ -337,7 +361,7 @@ void Game::calc()
 						display = temp / display;
 						break;
 					case Status::perc:
-						
+
 						break;
 					default:
 						break;
@@ -369,7 +393,8 @@ void Game::calc()
 					display = 0;
 					break;
 				case 16:
-					status = Status::perc;
+					status = Status::def;
+					display *= 0.01;
 					break;
 				case 17:
 					display = -display;
@@ -396,7 +421,7 @@ void Game::calc()
 
 		window->clear();
 		for (auto i : *buttons)
-			i->draw(window);
+			i->draw(window, shader);
 		window->draw(tx);
 		if (status != Status::def && status != Status::final)
 			window->draw(tx2);

@@ -97,7 +97,7 @@ int Button::update(sf::RenderWindow* window, int &cntcrs)
 	return return_;
 }
 
-void Button::draw(sf::RenderWindow* window)
+void Button::draw(sf::RenderWindow* window, sf::Shader &shader)
 {
 	window->draw(body);
 	window->draw(tx);
